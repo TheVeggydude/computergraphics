@@ -11,6 +11,7 @@
 
 #include "shapes/sphere.h"
 #include "shapes/triangle.h"
+#include "shapes/plane.h"
 
 // =============================================================================
 // -- End of shape includes ----------------------------------------------------
@@ -44,8 +45,13 @@ bool Raytracer::parseObjectNode(json const &node)
 		  B = Triple(node["B"]);
 		  C = Triple(node["C"]);
 		  obj = ObjectPtr(new Triangle(A, B, C));
-	  }
-    else 
+	  } else if (node["type"]== "plane"){
+	    Point A, B, C;
+	    A = Triple(node["A"]);
+		  B = Triple(node["B"]);
+		  C = Triple(node["C"]);
+		  obj = ObjectPtr(new Plane(A, B, C));
+    } else 
     {
         cerr << "Unknown object type: " << node["type"] << ".\n";
     }
