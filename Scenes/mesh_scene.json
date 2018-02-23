@@ -1,0 +1,20 @@
+{
+    "Eye": [200, 200, 1000],
+    "Lights": [{
+        "position": [-1000, 600, 500],
+        "color": [1.0, 1.0, 1.0]
+    }],
+    "Objects": [
+        {
+            "type": "mesh",
+            "filename": "../Scenes/models/sphere.obj",
+            "material": {
+                "color": [1.0, 0.0, 0.0],
+                "ka": 0.1,
+                "kd": 0.5,
+                "ks": 0.3,
+                "n": 32
+            }
+        }
+    ]
+}
