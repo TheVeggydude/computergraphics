@@ -1,3 +1,0 @@
-/home/jeroen/Downloads/raytracer/build/CMakeFiles/edit_cache.dir
-/home/jeroen/Downloads/raytracer/build/CMakeFiles/rebuild_cache.dir
-/home/jeroen/Downloads/raytracer/build/CMakeFiles/ray.dir
