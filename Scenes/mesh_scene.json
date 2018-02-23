@@ -7,8 +7,8 @@
     "Objects": [
         {
             "type": "mesh",
-            "filename": "../Scenes/models/sphere.obj",
-            "position": [200,200,0],
+            "filename": "../Scenes/models/cat.obj",
+            "position": [200,200,995],
             "material": {
                 "color": [1.0, 0.0, 0.0],
                 "ka": 0.1,
