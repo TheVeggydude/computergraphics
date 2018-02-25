@@ -1,4 +1,3 @@
-#include "triangle.h"
 #include "../objloader.h"
 #include "../vertex.h"
 

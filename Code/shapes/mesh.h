@@ -2,6 +2,7 @@
 #define MESH_H
 
 #include "../object.h"
+#include "triangle.h"
 
 class Mesh : public Object
 {
