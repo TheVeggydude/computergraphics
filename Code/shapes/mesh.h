@@ -7,7 +7,7 @@
 class Mesh : public Object
 {
 public:
-    explicit Mesh(std::string const &filename, Point pos);
+    explicit Mesh(std::string const &filename, Point pos, Point scale);
 
     virtual Hit intersect(const Ray &ray);
     

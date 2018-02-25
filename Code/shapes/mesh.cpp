@@ -8,7 +8,7 @@
 
 using namespace std;
 
-Mesh::Mesh(string const &filename, Point pos)
+Mesh::Mesh(string const &filename, Point pos, Point scale)
 {
   //create objloader and get data
   OBJLoader * loader = new OBJLoader(filename);
@@ -20,9 +20,9 @@ Mesh::Mesh(string const &filename, Point pos)
     {
       //create points out of the vertices
       Point A, B, C;
-      A = pos+Triple(data[idx].x, data[idx].y,data[idx].z);
-      B = pos+Triple(data[idx+1].x, data[idx+1].y,data[idx+1].z);
-      C = pos+Triple(data[idx+2].x, data[idx+2].y,data[idx+2].z);
+      A = pos+scale*Triple(data[idx].x, data[idx].y,data[idx].z);
+      B = pos+scale*Triple(data[idx+1].x, data[idx+1].y,data[idx+1].z);
+      C = pos+scale*Triple(data[idx+2].x, data[idx+2].y,data[idx+2].z);
       
       //create triangle out of points and add to triangle vector
       triangles.push_back(Triangle(A,B,C));

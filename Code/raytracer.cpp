@@ -42,28 +42,29 @@ bool Raytracer::parseObjectNode(json const &node)
         double radius = node["radius"];
         obj = ObjectPtr(new Sphere(pos, radius));
     } else if (node["type"] == "triangle") {
-		  Point A, B, C;
-		  A = Triple(node["A"]);
-		  B = Triple(node["B"]);
-		  C = Triple(node["C"]);
-		  obj = ObjectPtr(new Triangle(A, B, C));
+		    Point A, B, C;
+		    A = Triple(node["A"]);
+		    B = Triple(node["B"]);
+		    C = Triple(node["C"]);
+		    obj = ObjectPtr(new Triangle(A, B, C));
 	  } else if (node["type"]== "plane"){
-	    Point A, B, C;
-	    A = Triple(node["A"]);
-		  B = Triple(node["B"]);
-		  C = Triple(node["C"]);
-		  obj = ObjectPtr(new Plane(A, B, C));
+	      Point A, B, C;
+	      A = Triple(node["A"]);
+		    B = Triple(node["B"]);
+		    C = Triple(node["C"]);
+		    obj = ObjectPtr(new Plane(A, B, C));
     } else if (node["type"]== "quad"){
-	    Point A, B, C, D;
-	    A = Triple(node["A"]);
-		  B = Triple(node["B"]);
-		  C = Triple(node["C"]);
-		  D = Triple(node["D"]);
-		  obj = ObjectPtr(new Quad(A, B, C, D));
+	      Point A, B, C, D;
+	      A = Triple(node["A"]);
+		    B = Triple(node["B"]);
+		    C = Triple(node["C"]);
+		    D = Triple(node["D"]);
+		    obj = ObjectPtr(new Quad(A, B, C, D));
     } else if (node["type"]== "mesh"){
-      string filename = node["filename"];
-      Point pos(node["position"]);
-		  obj = ObjectPtr(new Mesh(filename,pos));
+        string filename = node["filename"];
+        Point pos(node["position"]);
+        Point scale(node["scale"]);
+		    obj = ObjectPtr(new Mesh(filename, pos, scale));
     } else 
     {
         cerr << "Unknown object type: " << node["type"] << ".\n";
