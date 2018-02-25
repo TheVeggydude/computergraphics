@@ -13,6 +13,7 @@
 #include "shapes/triangle.h"
 #include "shapes/plane.h"
 #include "shapes/mesh.h"
+#include "shapes/quad.h"
 
 // =============================================================================
 // -- End of shape includes ----------------------------------------------------
@@ -52,6 +53,13 @@ bool Raytracer::parseObjectNode(json const &node)
 		  B = Triple(node["B"]);
 		  C = Triple(node["C"]);
 		  obj = ObjectPtr(new Plane(A, B, C));
+    } else if (node["type"]== "quad"){
+	    Point A, B, C, D;
+	    A = Triple(node["A"]);
+		  B = Triple(node["B"]);
+		  C = Triple(node["C"]);
+		  D = Triple(node["D"]);
+		  obj = ObjectPtr(new Quad(A, B, C, D));
     } else if (node["type"]== "mesh"){
       string filename = node["filename"];
       Point pos(node["position"]);
