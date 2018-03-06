@@ -16,6 +16,7 @@ class Scene
     std::vector<ObjectPtr> objects;
     std::vector<LightPtr> lights;   // no ptr needed, but kept for consistency
     Point eye;
+    bool shadows;
 
     public:
 
@@ -29,6 +30,7 @@ class Scene
         void addObject(ObjectPtr obj);
         void addLight(Light const &light);
         void setEye(Triple const &position);
+        void setShadows(bool flag);
 
         unsigned getNumObject();
         unsigned getNumLights();

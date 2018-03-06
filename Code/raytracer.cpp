@@ -115,6 +115,7 @@ try
 
     Point eye(jsonscene["Eye"]);
     scene.setEye(eye);
+    scene.setShadows(jsonscene["Shadows"]);
 
     // TODO: add your other configuration settings here
 
