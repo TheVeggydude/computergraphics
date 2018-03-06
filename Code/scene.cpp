@@ -51,34 +51,38 @@ Color Scene::trace(Ray const &ray)
     *        pow(a,b)           a to the power of b
     ****************************************************/
 
-    Color color = material.ka*material.color;                  
+    Color color = material.ka*material.color;
     
-    //Light vector
-    Vector Lm = (lights[0]->position - hit).normalized();
-    
-    //Grab material variables
-    double kd = material.kd;
-    double ks = material.ks;
-    double shinyness = material.n;
-    Color colorMat = material.color;
-    Color colorLight = lights[0]->color;
-    
-    // Calculate Lm*N
-    double dotLN = Lm.dot(N);
-    Vector Rm = 2*dotLN*N - Lm;
-    double dotRV = Rm.dot(V);
-    
-    // Make sure dot products are not <0
-    if (dotLN < 0)
-      dotLN = 0;
-    if (dotRV < 0)
-      dotRV = 0;
+    //For each lightsource
+    for (size_t idx = 0; idx != lights.size(); ++idx) {
       
-    // Calculate diffuse and specular values
-    Color diffuse = kd * dotLN * colorMat * colorLight;
-    Color specular = ks * pow(dotRV, shinyness) * colorLight;
-    color += diffuse + specular;
-
+      //Calculate light vector
+      Vector Lm = (lights[idx]->position - hit).normalized();
+      
+      //Grab material variables
+      double kd = material.kd;
+      double ks = material.ks;
+      double shinyness = material.n;
+      Color colorMat = material.color;
+      Color colorLight = lights[idx]->color;
+      
+      //Calculate Lm*N
+      double dotLN = Lm.dot(N);
+      Vector Rm = 2*dotLN*N - Lm;
+      double dotRV = Rm.dot(V);
+      
+      //Make sure dot products are not <0
+      if (dotLN < 0)
+        dotLN = 0;
+      if (dotRV < 0)
+        dotRV = 0;
+        
+      //Calculate diffuse and specular values
+      Color diffuse = kd * dotLN * colorMat * colorLight;
+      Color specular = ks * pow(dotRV, shinyness) * colorLight;
+      color += diffuse + specular;
+    }
+    
     return color;
 }
 
@@ -86,6 +90,7 @@ void Scene::render(Image &img)
 {
     unsigned w = img.width();
     unsigned h = img.height();
+    
     #pragma omp parallel for
     for (unsigned y = 0; y < h; ++y)
     {
