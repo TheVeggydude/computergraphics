@@ -53,10 +53,11 @@ Color Scene::trace(Ray const &ray)
 
     Color color = material.ka*material.color;
     
-    obj = nullptr;
-    
     //For each lightsource
     for (size_t idx = 0; idx != lights.size(); ++idx) {
+    
+      Hit min_hit(std::numeric_limits<double>::infinity(),Vector());
+      obj = nullptr;
       
       //Calculate light vector
       Vector Lm = (lights[idx]->position - hit).normalized();
