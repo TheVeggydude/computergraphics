@@ -10,7 +10,9 @@
 
 using namespace std;
 
-Color Scene::trace(Ray const &ray)
+int initDepth = -3;
+
+Color Scene::trace(Ray const &ray, int depth)
 {
     // Find hit object and distance
     Hit min_hit(numeric_limits<double>::infinity(), Vector());
@@ -106,6 +108,12 @@ Color Scene::trace(Ray const &ray)
       }
     }
     
+    if (depth < 0){
+      Triple reflection = 2*N.dot(V.normalized()) * N - V.normalized();
+      Ray reflectionRay(hit, reflection);
+      color += material.ks * trace(reflectionRay, depth+1);
+    }
+    
     return color;
 }
 
@@ -121,7 +129,7 @@ void Scene::render(Image &img)
         {
             Point pixel(x + 0.5, h - 1 - y + 0.5, 0);
             Ray ray(eye, (pixel - eye).normalized());
-            Color col = trace(ray);
+            Color col = trace(ray, initDepth);
             col.clamp();
             img(x, y) = col;
         }
