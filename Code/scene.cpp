@@ -54,7 +54,11 @@ Color Scene::trace(Ray const &ray, int depth)
 
     Color color = Color(0.0, 0.0, 0.0);
     if(material.texture != nullptr){
-      return material.texture->colorAt(0.0,0.0); 
+    
+      double u = 0.0;
+      double v = 0.0;
+      obj->computeTexCoords(hit, &u, &v);
+      return material.texture->colorAt(u,v); 
     } else {
       color = material.ka*material.color;
     }

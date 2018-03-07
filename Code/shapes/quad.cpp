@@ -5,6 +5,12 @@
 
 using namespace std;
 
+void Quad::computeTexCoords(Point center, double* u, double* v) 
+{
+	  *u = 0.0;
+  	*v = 0.0;
+}
+
 Quad::Quad(Point A, Point B, Point C, Point D)
 {
   //points are given counter-clockwise

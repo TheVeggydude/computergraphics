@@ -21,6 +21,8 @@ class Object
 
         virtual Hit intersect(Ray const &ray) = 0;  // must be implemented
                                                     // in derived class
+                                                    
+        virtual void computeTexCoords(Point center, double *u, double *v) = 0;
 };
 
 #endif

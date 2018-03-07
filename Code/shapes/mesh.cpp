@@ -8,6 +8,12 @@
 
 using namespace std;
 
+void Mesh::computeTexCoords(Point center, double* u, double* v)
+{
+  *u = 0.0;
+  *v = 0.0;
+}
+
 Mesh::Mesh(string const &filename, Point pos, Point scale)
 {
   //create objloader and get data

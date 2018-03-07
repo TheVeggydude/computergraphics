@@ -4,6 +4,34 @@
 
 using namespace std;
 
+void Sphere::computeTexCoords(Point center, double* u, double* v) 
+{		
+    
+    Triple t = 50 * Vector(0,1,0.7);
+    double angle = 90;
+    Triple norm = t.normalized();
+
+    double cos_A = cos(angle * (M_PI / 180));
+    double sin_A = sin(angle * (M_PI / 180));
+
+    Triple v1 = Triple(cos_A + norm.x * norm.x * (1 - cos_A), norm.x * norm.y * (1 - cos_A) - norm.z * sin_A, norm.x * norm.z * (1 - cos_A) + norm.y * sin_A);
+    Triple v2 = Triple(norm.y * norm.x * (1 - cos_A) + norm.z * sin_A, cos_A + norm.y * norm.y * (1 - cos_A), norm.y * norm.z * (1 - cos_A) - norm.x * sin_A);
+    Triple v3 = Triple(norm.z * norm.x * (1 - cos_A) - norm.y * sin_A, norm.z * norm.y * (1 - cos_A) + norm.x * sin_A, cos_A + norm.z * norm.z * (1 - cos_A));
+
+    double cx = v1.dot((center - position)) + position.x;
+    double cy = v2.dot((center - position)) + position.y;
+    double cz = v3.dot((center - position)) + position.z;
+
+	double theta = acos((cz - position.z) / r);
+	double phi = atan2(cy - position.y, cx - position.x);
+	
+	if (phi < 0)
+		phi = phi + 2 * M_PI;
+
+	*u = phi / (2 * M_PI);
+	*v = (M_PI - theta) / M_PI;
+}
+
 Hit Sphere::intersect(Ray const &ray)
 {
     /****************************************************

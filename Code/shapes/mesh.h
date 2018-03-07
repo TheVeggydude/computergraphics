@@ -9,6 +9,7 @@ class Mesh : public Object
 public:
     explicit Mesh(std::string const &filename, Point pos, Point scale);
 
+    void computeTexCoords(Point center, double* u, double* v);
     virtual Hit intersect(const Ray &ray);
     
     std::vector<Triangle> triangles;

@@ -4,6 +4,12 @@
 
 /************************** Plane **********************************/
 
+void Plane::computeTexCoords(Point center, double* u, double* v) 
+{
+	  *u = 0.0;
+  	*v = 0.0;
+}
+
 Hit Plane::intersect(const Ray &ray)
 {
 

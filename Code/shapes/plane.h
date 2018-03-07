@@ -12,6 +12,7 @@ public:
 
     }
 
+    void computeTexCoords(Point center, double* u, double* v);
     virtual Hit intersect(const Ray &ray);
 
     const Point origin;

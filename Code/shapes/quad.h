@@ -9,6 +9,7 @@ class Quad : public Object
 public:
     Quad(Point A, Point B, Point C, Point D);
 
+    void computeTexCoords(Point center, double* u, double* v); 
     virtual Hit intersect(const Ray &ray);
 
     std::vector<Triangle> triangles;

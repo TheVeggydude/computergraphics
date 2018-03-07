@@ -5,6 +5,12 @@
 
 using namespace std;
 
+void Triangle::computeTexCoords(Point center, double* u, double* v) 
+{
+	  *u = 0.0;
+  	*v = 0.0;
+}
+
 Hit Triangle::intersect(const Ray &ray)
 {
 
