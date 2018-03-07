@@ -18,6 +18,7 @@ class Scene
     Point eye;
     bool shadows;
     int AAFactor;
+    int maxDepth;
 
     public:
 
@@ -33,6 +34,7 @@ class Scene
         void setEye(Triple const &position);
         void setShadows(bool flag);
         void setAAFactor(int factor);
+        void setMaxDepth(int depth);
 
         unsigned getNumObject();
         unsigned getNumLights();

@@ -10,8 +10,6 @@
 
 using namespace std;
 
-int initDepth = -3;
-
 Color Scene::trace(Ray const &ray, int depth)
 {
     // Find hit object and distance
@@ -108,10 +106,10 @@ Color Scene::trace(Ray const &ray, int depth)
       }
     }
     
-    if (depth < 0){
+    if (depth > 0){
       Triple reflection = 2*N.dot(V.normalized()) * N - V.normalized();
       Ray reflectionRay(hit, reflection);
-      color += material.ks * trace(reflectionRay, depth+1);
+      color += material.ks * trace(reflectionRay, depth-1);
     }
     
     return color;
@@ -143,7 +141,7 @@ void Scene::render(Image &img)
 
               //Cast ray
               Ray ray(eye, (pixel-eye).normalized());
-              Color col = trace(ray, initDepth);
+              Color col = trace(ray, maxDepth);
               col.clamp();
               c += col;
             }
@@ -180,6 +178,11 @@ void Scene::setShadows(bool flag)
 void Scene::setAAFactor(int factor)
 {
   AAFactor = factor;
+}
+
+void Scene::setMaxDepth(int depth)
+{
+  maxDepth = depth;
 }
 
 unsigned Scene::getNumObject()

@@ -92,12 +92,24 @@ Light Raytracer::parseLightNode(json const &node) const
 
 Material Raytracer::parseMaterialNode(json const &node) const
 {
-    Color color(node["color"]);
     double ka = node["ka"];
     double kd = node["kd"];
     double ks = node["ks"];
     double n  = node["n"];
-    return Material(color, ka, kd, ks, n);
+    
+    //Store the texturefile path if there is one, else use the color
+    string img = "";
+    Color color= Color(0.0, 0.0, 0.0);
+    if(node.count("texture")==1){
+    cout << "test\n";
+    
+      img = node["texture"];
+    }else{
+      color = Color(node["color"]);
+    }
+      
+    cout << img;
+    return Material(color, ka, kd, ks, n, img);
 }
 
 bool Raytracer::readScene(string const &ifname)
@@ -126,6 +138,11 @@ try
       scene.setAAFactor(jsonscene["SuperSamplingFactor"]);
     } else {
       scene.setAAFactor(1);
+    }
+    
+    if(jsonscene.count("MaxRecursionDepth")==1)
+    {
+      scene.setMaxDepth(jsonscene["MaxRecursionDepth"]);
     }
 
     for (auto const &lightNode : jsonscene["Lights"])

@@ -3,6 +3,8 @@
 
 #include "triple.h"
 
+using namespace std;
+
 class Material
 {
     public:
@@ -11,16 +13,18 @@ class Material
         double kd;          // diffuse intensity
         double ks;          // specular intensity
         double n;           // exponent for specular highlight size
+        string textureFile; // path/to/textureFile
 
         Material() = default;
 
-        Material(Color const &color, double ka, double kd, double ks, double n)
+        Material(Color const &color, double ka, double kd, double ks, double n, string img)
         :
             color(color),
             ka(ka),
             kd(kd),
             ks(ks),
-            n(n)
+            n(n),
+            textureFile(img)
         {}
 };
 
