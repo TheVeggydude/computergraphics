@@ -127,11 +127,30 @@ void Scene::render(Image &img)
     {
         for (unsigned x = 0; x < w; ++x)
         {
-            Point pixel(x + 0.5, h - 1 - y + 0.5, 0);
-            Ray ray(eye, (pixel - eye).normalized());
-            Color col = trace(ray, initDepth);
-            col.clamp();
-            img(x, y) = col;
+          Color c = Color(0);
+          
+          //Cast all the sub
+          for (int h1 = 0; h1 < AAFactor; ++h1)
+          {
+            for (int w1 = 0; w1 < AAFactor; ++w1)
+            {
+            
+              //Calculate sub-ray starting positions
+              double xPos =  ((double) w1 + (w1 + 1.0))/(double)AAFactor * 0.5;
+              double yPos = ((double) h1 + (h1 + 1.0))/(double)AAFactor * 0.5;
+
+              Point pixel(x + xPos, h-1.0-y+yPos, 0);
+
+              //Cast ray
+              Ray ray(eye, (pixel-eye).normalized());
+              Color col = trace(ray, initDepth);
+              col.clamp();
+              c += col;
+            }
+          }
+
+          //Divide over the amount of colors added
+          img(x,y) = c / ((AAFactor) * (AAFactor));
         }
     }
 }
@@ -156,6 +175,11 @@ void Scene::setEye(Triple const &position)
 void Scene::setShadows(bool flag)
 {
     shadows = flag;
+}
+
+void Scene::setAAFactor(int factor)
+{
+  AAFactor = factor;
 }
 
 unsigned Scene::getNumObject()

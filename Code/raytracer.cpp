@@ -115,9 +115,18 @@ try
 
     Point eye(jsonscene["Eye"]);
     scene.setEye(eye);
-    scene.setShadows(jsonscene["Shadows"]);
+    
+    if(jsonscene.count("Shadows")==1)
+    {
+      scene.setShadows(jsonscene["Shadows"]);
+    }
 
-    // TODO: add your other configuration settings here
+    if(jsonscene.count("SuperSamplingFactor")==1)
+    {
+      scene.setAAFactor(jsonscene["SuperSamplingFactor"]);
+    } else {
+      scene.setAAFactor(1);
+    }
 
     for (auto const &lightNode : jsonscene["Lights"])
         scene.addLight(parseLightNode(lightNode));
