@@ -97,18 +97,20 @@ Material Raytracer::parseMaterialNode(json const &node) const
     double ks = node["ks"];
     double n  = node["n"];
     
-    //Store the texturefile path if there is one, else use the color
-    string img = "";
+    //If there is a texture, create an image object and pass the pointer to the material
+    Image* img = nullptr;
     Color color= Color(0.0, 0.0, 0.0);
     if(node.count("texture")==1){
-    cout << "test\n";
-    
-      img = node["texture"];
-    }else{
-      color = Color(node["color"]);
-    }
+
+      string bufferStr = node["texture"];
+      img = new Image("../Scenes/" + bufferStr);
       
-    cout << img;
+    }else{
+    
+      color = Color(node["color"]);
+      
+    }
+    
     return Material(color, ka, kd, ks, n, img);
 }
 

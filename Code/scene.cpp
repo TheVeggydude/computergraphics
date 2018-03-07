@@ -6,6 +6,7 @@
 #include "ray.h"
 
 #include <cmath>
+#include <iostream>
 #include <limits>
 
 using namespace std;
@@ -51,7 +52,12 @@ Color Scene::trace(Ray const &ray, int depth)
     *        pow(a,b)           a to the power of b
     ****************************************************/
 
-    Color color = material.ka*material.color;
+    Color color = Color(0.0, 0.0, 0.0);
+    if(material.texture != nullptr){
+      return material.texture->colorAt(0.0,0.0); 
+    } else {
+      color = material.ka*material.color;
+    }
     
     //For each lightsource
     for (size_t idx = 0; idx != lights.size(); ++idx) {
