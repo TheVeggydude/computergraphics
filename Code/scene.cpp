@@ -53,14 +53,21 @@ Color Scene::trace(Ray const &ray, int depth)
     ****************************************************/
 
     Color color = Color(0.0, 0.0, 0.0);
+    Color matColor = Color(0.0,0.0,0.0);
+    
     if(material.texture != nullptr){
     
+      //If texture, get uv coords and color at that point
       double u = 0.0;
       double v = 0.0;
       obj->computeTexCoords(hit, &u, &v);
-      return material.texture->colorAt(u,v); 
+      matColor = material.texture->colorAt(u,v); 
+      color = material.ka*matColor;
     } else {
-      color = material.ka*material.color;
+      
+      //Else just get the standard color
+      matColor = material.color;
+      color = material.ka*matColor;
     }
     
     //For each lightsource
@@ -95,7 +102,6 @@ Color Scene::trace(Ray const &ray, int depth)
         double kd = material.kd;
         double ks = material.ks;
         double shinyness = material.n;
-        Color colorMat = material.color;
         Color colorLight = lights[idx]->color;
         
         //Calculate Lm*N
@@ -110,7 +116,7 @@ Color Scene::trace(Ray const &ray, int depth)
           dotRV = 0;
           
         //Calculate diffuse and specular values
-        Color diffuse = kd * dotLN * colorMat * colorLight;
+        Color diffuse = kd * dotLN * matColor * colorLight;
         Color specular = ks * pow(dotRV, shinyness) * colorLight;
         color += diffuse + specular;
       }

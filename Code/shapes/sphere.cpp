@@ -7,8 +7,8 @@ using namespace std;
 void Sphere::computeTexCoords(Point center, double* u, double* v) 
 {		
     
-    Triple t = 50 * Vector(0,1,0.7);
-    double angle = 90;
+    Triple t = 50 * Vector(0,0,1);
+    double angle = 0.0;
     Triple norm = t.normalized();
 
     double cos_A = cos(angle * (M_PI / 180));
